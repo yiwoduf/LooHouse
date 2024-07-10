@@ -8,7 +8,7 @@ function Component() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5328/")
+    fetch(`${process.env.NEXT_API_URL}/`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
