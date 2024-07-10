@@ -106,7 +106,7 @@ const Form: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // prevent default form sub
+    e.preventDefault(); // prevent default form submission
 
     const queryParams = new URLSearchParams();
     Object.keys(formData).forEach((key) => {
@@ -114,15 +114,24 @@ const Form: React.FC = () => {
     });
     const queryString = queryParams.toString();
 
-    const response = await fetch(
-      `http://localhost:5328/predict?${queryString}`,
-      {
-        method: "GET",
-      }
-    );
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_API_URL}/predict?${queryString}`,
+        {
+          method: "GET",
+        }
+      );
 
-    const data = await response.json();
-    console.log(data);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // Handle the response data here
+      console.log(data);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   };
 
   return (

@@ -1,20 +1,19 @@
 from flask import Flask
-from flask_cors import CORS  # Remove in production, just allows to run and access on local device
+from flask_cors import CORS
+import os
 
 from api.config import Config
 from api.config import App_config
 from api.log import Log
 
-
-### initializing app###
 def create_app():
     """Creates the Flask app"""
     app = Flask(__name__)
     app_config = App_config()
     app.config.from_object(Config())
 
-    # Temporary features for dev. environment
-    CORS(app)
+    # Configure CORS to allow requests from your frontend
+    CORS(app, resources={r"/*": {"origins": os.environ.get('NEXT_FRONTEND_URL')}})
 
     # Creating log instance
     app_log = Log(app_config)
