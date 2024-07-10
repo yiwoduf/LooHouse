@@ -22,7 +22,7 @@ class Config:
 class App_config:
   _self = None
 
-  PROJECT_DIR = "HackKU-2024-LOOH"
+  PROJECT_DIR = "LooHouse"
   """Name of project directory"""
 
   API_DIR = "api"

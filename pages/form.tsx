@@ -59,7 +59,7 @@ const Form: React.FC = () => {
     },
     {
       key: "hotwater",
-      question: "핫 와터",
+      question: "Hot Water",
       options: [
         { value: 1, label: "Yes" },
         { value: 0, label: "No" },
@@ -67,7 +67,7 @@ const Form: React.FC = () => {
     },
     {
       key: "basement",
-      question: "베이스먼트",
+      question: "Basement",
       options: [
         { value: 1, label: "Yes" },
         { value: 0, label: "No" },
@@ -126,32 +126,44 @@ const Form: React.FC = () => {
   };
 
   return (
-    <form className="max-w-lg mx-auto space-y-4" onSubmit={handleSubmit}>
-      {questions.map((questionObj, index) => (
-        <div key={index}>
-          <label
-            htmlFor={`dropdown-${index}`}
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+    <div className="bg-zinc-100 dark:bg-zinc-900 pt-5 pb-5 justify-center">
+      <form
+        className="max-w-lg mx-auto pt-5 pb-5 space-y-4 justify-center"
+        onSubmit={handleSubmit}
+      >
+        {questions.map((question, index) => (
+          <div key={question.key}>
+            {" "}
+            <label
+              htmlFor={`dropdown-${question.key}`}
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              {question.question}
+            </label>
+            <select
+              id={`dropdown-${question.key}`}
+              className="block w-full px-4 py-2 text-base text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(e) => handleChange(e, question.key)}
+              value={formData[question.key]}
+            >
+              {question.options.map((option) => (
+                <option key={option.value.toString()} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="submit-button cursor-pointer inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:focus:ring-yellow-900"
           >
-            {questionObj.question}
-          </label>
-          <select
-            id={`dropdown-${index}`}
-            className="block w-full px-4 py-2 text-base text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(e) => handleChange(e, questionObj.key)}
-          >
-            {questionObj.options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            Get Estimate
+          </button>
         </div>
-      ))}
-      <button type="submit" className="submit-button">
-        FIND!
-      </button>
-    </form>
+      </form>
+    </div>
   );
 };
 
